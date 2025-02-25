@@ -166,10 +166,10 @@
                         <textarea id="goodbye_info" placeholder="Нажмите на кнопку..." class="form-textarea" rows="4"></textarea>
                     </div>
                    <div class="form-buttons-info">
-                        <button type="button" id="copy_prepayment_info" class="copy_button-reservation btn-icon">
+                        <button type="button" id="copy_prepayment_info" class="copy_button-reservation btn-icon copy_button">
                             <div class="icon-copy"></div> #1
                         </button>
-                        <button type="button" id="copy_goodbye_info" class="copy_button-reservation btn-icon">
+                        <button type="button" id="copy_goodbye_info" class="copy_button-reservation btn-icon copy_button">
                             <div class="icon-copy"></div> #2    
                         </button>
                     </div>
@@ -192,25 +192,25 @@
                             <div class="icon-copy"></div>
                         </button>
                         <input id="format_clients" class="form-input format_input" placeholder="2">
-                        <button type="button" id="copy_format_service" class="copy_button btn-icon">
+                        <button type="button" id="copy_format_clients" class="copy_button btn-icon">
                             <div class="icon-copy"></div>
                         </button>
                     </div>
                     <div class="format-field">
                         <input id="format_start" class="form-input format_input" placeholder="10:00">
-                        <button type="button" id="copy_format_service" class="copy_button btn-icon">
+                        <button type="button" id="copy_format_start" class="copy_button btn-icon">
                             <div class="icon-copy"></div>
                         </button>
                         <input id="format_end" class="form-input format_input" placeholder="12:00">
-                        <button type="button" id="copy_format_service" class="copy_button btn-icon">
+                        <button type="button" id="copy_format_end" class="copy_button btn-icon">
                             <div class="icon-copy"></div>
                         </button>
                     </div>
                     <div class="format-field info-data">
-                        <label for="format_discount" class="form-label">Постоплата</label>
+                        <label for="format_postpayment" class="form-label">Постоплата</label>
                         <div class="format-field">
                             <input id="format_postpayment" class="form-input format_input" placeholder="270"></input>
-                            <button type="button" id="copy_format_end" class="copy_button btn-icon">
+                            <button type="button" id="copy_format_postpayment" class="copy_button btn-icon">
                                 <div class="icon-copy"></div>
                             </button>
                         </div>
@@ -219,13 +219,13 @@
                         <label for="format_discount" class="form-label">Комментарий</label>
                         <div class="format-field">
                             <input id="format_discount" class="form-input format_input" placeholder="скидка др"></input>
-                            <button type="button" id="copy_format_end" class="copy_button btn-icon">
+                            <button type="button" id="copy_format_discount" class="copy_button btn-icon">
                                 <div class="icon-copy"></div>
                             </button>
                         </div>
                     </div>
 
-                    <button type="button" id="update-button" class="btn btn-primary">Применить</button>
+                    <button id="format_button" type="button" id="update-button" class="btn btn-primary">Применить</button>
                 </div>
 
                 <div id="t3" class="tab form-group">

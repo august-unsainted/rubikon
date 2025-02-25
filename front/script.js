@@ -50,7 +50,7 @@ function populateTimeSelect(hourId, minuteId) {
 populateTimeSelect('start-hour', 'start-minute');
 populateTimeSelect('end-hour', 'end-minute');
 
-async function update_end() {
+async function update_end(startTime) {
   hours = document.getElementById('hours').value;
   end = await eel.update_end(startTime, hours)();
   end = end.split(':');
@@ -67,15 +67,29 @@ document.getElementById('apply-button').onclick = async () => {
   });
 
   values['date'] = document.getElementById('formattedDate').textContent;
+  values['not_formatted_date'] = document.getElementById('date').value;
   values = await eel.get_info(values)();
 
   document.getElementById('hours').value = values['hours'];
-  await update_end();
+  await update_end(values['start']);
+
+  // for (var field in values) {
+  //   field = document.getElementById
+  // }
 
   if (values['prepayment_info']) {
     document.getElementById('prepayment_info').value =
       values['prepayment_info'];
   }
+
+  if (values['goodbye_info']) {
+    document.getElementById('goodbye_info').value =
+      values['goodbye_info'];
+  }
+
+  results = document.getElementsByClassName('result')
+  Array.from(results).forEach((result) => result.textContent = values[result.id])
+
 };
 
 Array.from(document.getElementsByClassName('update_button')).forEach(
@@ -96,16 +110,21 @@ Array.from(document.getElementsByClassName('update_button')).forEach(
           endTime
         )();
       } else {
-        await update_end();
+        await update_end(startTime);
       }
     };
   }
 );
 
-document.getElementById('copy-button').onclick = () => {
-  const textarea = document.getElementById('prepayment_info');
-  navigator.clipboard.writeText(textarea.value);
-};
+Array.from(document.getElementsByClassName('copy_button')).forEach((button) => {
+  button.onclick = () => {
+    search_id = button.id.replace('copy_', '')
+    const field = document.getElementById(search_id);
+    navigator.clipboard.writeText(field.value);
+    // navigator.clipboard.writeText(field.value);
+    // console.log(search_id, field.value)
+  };
+});
 
 function validateInput(input) {
   // 1. Оставляем только русские буквы (в нижнем регистре)
@@ -119,3 +138,23 @@ function validateInput(input) {
   // 3. Обновляем значение поля ввода
   input.value = value;
 }
+
+document.getElementById('format_button').onclick = async () => {
+  // вс, 23 февраля 	Дарья	89503805622	на месте	Киносвидание Lite	20:00-22:00	2	р.270,00	р.270,00	р.540,00	Дарья	скидка админ																
+  input_values = await eel.get_format_inputs(document.getElementById('input-data').value)();
+  console.log(input_values)
+  inputs = document.getElementsByClassName('format_input')
+  console.log(inputs)
+  for (let i = 0; i < input_values.length; i++) {
+    console.log(inputs[i].value, input_values[i])
+   inputs[i].value = input_values[i]
+  }
+//  Array.from().forEach((input, i) => {
+//    input.value = input_values[i]
+//  })
+}
+
+document.getElementById('paste_format_start').onclick = async () => {
+  document.getElementById('input-data').value = await navigator.clipboard.readText();
+}
+

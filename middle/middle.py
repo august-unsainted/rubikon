@@ -1,6 +1,6 @@
 import eel
 
-from back.get_info import get_main_info, get_hours, get_end
+from back.get_info import get_main_info, get_hours, get_end, get_format
 
 
 @eel.expose
@@ -16,3 +16,8 @@ def update_hours(start: str, end: str) -> int:
 @eel.expose
 def update_end(start: str, hours: str) -> str:
     return get_end(start, hours)
+
+
+@eel.expose
+def get_format_inputs(data: str) -> list:
+    return get_format(data)
