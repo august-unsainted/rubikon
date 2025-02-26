@@ -1,4 +1,5 @@
 import copy
+from datetime import datetime
 
 from back.data import *
 
@@ -92,3 +93,11 @@ def get_main_info(values: dict) -> dict[str: str]:
             info['goodbye_info'] = goodbye
         return info
     return
+
+
+# def set_hours_of_work(date: str) -> list:
+#     weekday = datetime.strptime(date, '%Y.%d.%m').weekday()
+#     if 0 <= weekday <= 2:
+#         return [17, 0]
+#     else:
+#

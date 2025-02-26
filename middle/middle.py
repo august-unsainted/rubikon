@@ -1,6 +1,9 @@
+from typing import Tuple
+
 import eel
 
-from back.get_info import get_main_info, get_hours, get_end, get_format
+from back.get_info import get_main_info, get_hours, get_end
+from back.sheets import *
 
 
 @eel.expose
@@ -19,5 +22,6 @@ def update_end(start: str, hours: str) -> str:
 
 
 @eel.expose
-def get_format_inputs(data: str) -> list:
-    return get_format(data)
+def get_sheets(values: dict) -> None:
+    update_prepayment(values), update_reservation(values)
+    color_cells(values['pay'])

@@ -6,7 +6,6 @@ const minDate = `${year}-${month}-${day}`;
 
 const dateInput = document.getElementById('date');
 dateInput.setAttribute('min', minDate);
-
 dateInput.value = minDate;
 
 const formattedDateElement = document.getElementById('formattedDate');
@@ -20,35 +19,56 @@ function updateFormattedDate(date) {
   formattedDateElement.textContent = formattedDate;
 }
 
-updateFormattedDate(new Date(dateInput.value));
-
-dateInput.addEventListener('change', function () {
-  const selectedDate = new Date(this.value);
-  updateFormattedDate(selectedDate);
-});
-
-function set_time(i, select) {
+function setOption(i, select) {
   option = document.createElement('option');
   option.value = i.toString().padStart(2, '0');
   option.textContent = i.toString().padStart(2, '0');
   select.appendChild(option);
 }
 
-function populateTimeSelect(hourId, minuteId) {
-  const hourSelect = document.getElementById(hourId);
-  const minuteSelect = document.getElementById(minuteId);
+function setTime(start, end, replace = true) {
+  function updateSelect(timeType) {
+    const hourSelect = document.getElementById(`${timeType}-hour`);
+    const minuteSelect = document.getElementById(`${timeType}-minute`);
 
-  for (let i = 0; i <= 23; i++) {
-    set_time(i, hourSelect);
-  }
+    if (replace) {
+      hourSelect.replaceChildren();
+      minuteSelect.replaceChildren();
+    }
 
-  for (let i = 0; i < 60; i += 15) {
-    set_time(i, minuteSelect);
+    for (let i = start; i <= end; i++) {
+      if (i != 10) {
+        i == 24 ? (hour = 0) : (hour = i);
+        setOption(hour, hourSelect);
+      }    
+    }
+
+    for (let i = 0; i < 60; i += 15) {
+      setOption(i, minuteSelect);
+    }
   }
+  updateSelect('start');
+  updateSelect('end');
 }
 
-populateTimeSelect('start-hour', 'start-minute');
-populateTimeSelect('end-hour', 'end-minute');
+function updateHoursOfWork() {
+  const selectedDate = new Date(dateInput.value);
+  updateFormattedDate(selectedDate);
+  weekday = selectedDate.getDay();
+
+  if (weekday > 3 && weekday <= 5) {
+    setTime(0, 9);
+    setTime(17, 23, false);
+  } else {
+    weekday >= 0 && weekday <= 3 ? setTime(17, 24) : setTime(0, 23);
+  }
+
+}
+
+updateFormattedDate(new Date(dateInput.value));
+updateHoursOfWork();
+
+dateInput.addEventListener('change', updateHoursOfWork);
 
 async function update_end(startTime) {
   hours = document.getElementById('hours').value;
@@ -58,7 +78,7 @@ async function update_end(startTime) {
   document.getElementById('end-minute').value = end[1];
 }
 
-async function get_data() {
+async function get_main_info() {
   inputs = Array.from(document.getElementsByTagName('input'));
   selects = Array.from(document.getElementsByTagName('select'));
   values = {};
@@ -69,6 +89,11 @@ async function get_data() {
   values['date'] = document.getElementById('formattedDate').textContent;
   values['not_formatted_date'] = document.getElementById('date').value;
   values = await eel.get_info(values)();
+  return values;
+}
+
+async function get_data() {
+  values = await get_main_info()
 
   document.getElementById('hours').value = values['hours'];
   await update_end(values['start']);
@@ -79,13 +104,14 @@ async function get_data() {
   }
 
   if (values['goodbye_info']) {
-    document.getElementById('goodbye_info').value =
-      values['goodbye_info'];
+    document.getElementById('goodbye_info').value = values['goodbye_info'];
   }
 
-  results = document.getElementsByClassName('result')
-  Array.from(results).forEach((result) => result.textContent = values[result.id])
-};
+  results = document.getElementsByClassName('result');
+  Array.from(results).forEach(
+    (result) => (result.textContent = values[result.id])
+  );
+}
 
 document.getElementById('apply-button').onclick = get_data;
 
@@ -115,7 +141,7 @@ Array.from(document.getElementsByClassName('update_button')).forEach(
 
 Array.from(document.getElementsByClassName('copy_button')).forEach((button) => {
   button.onclick = () => {
-    search_id = button.id.replace('copy_', '')
+    search_id = button.id.replace('copy_', '');
     const field = document.getElementById(search_id);
     navigator.clipboard.writeText(field.value);
   };
@@ -124,24 +150,15 @@ Array.from(document.getElementsByClassName('copy_button')).forEach((button) => {
 function validateInput(input) {
   let value = input.value.replace(/[^а-яё]/gi, '');
   if (value.length > 0) {
-      value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+    value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
   }
   input.value = value;
 }
 
-document.getElementById('format_button').onclick = async () => {
-  // вс, 23 февраля 	Дарья	89503805622	на месте	Киносвидание Lite	20:00-22:00	2	р.270,00	р.270,00	р.540,00	Дарья	скидка админ																
-  input_values = await eel.get_format_inputs(document.getElementById('input-data').value)();
-  console.log(input_values)
-  inputs = document.getElementsByClassName('format_input')
-  console.log(inputs)
-  for (let i = 0; i < input_values.length; i++) {
-    console.log(inputs[i].value, input_values[i])
-   inputs[i].value = input_values[i]
-  }
+document.getElementById('sheets-button').onclick = async () => {
+  values = await get_main_info()
+  values['worker'] = document.getElementById('worker').value
+  checkbox = document.getElementById('pay')
+  values['pay'] = checkbox.checked
+  await eel.get_sheets(values);
 }
-
-document.getElementById('paste_format_start').onclick = async () => {
-  document.getElementById('input-data').value = await navigator.clipboard.readText();
-}
-

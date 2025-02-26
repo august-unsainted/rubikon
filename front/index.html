@@ -118,16 +118,16 @@
                 
                 <div class="tab-buttons">
                     <div class="tab-buttons-group">
-                        <button type="button" onclick="t(0)" class="btn">Итоги</button>
+                        <button type="button" onclick="t(0)" class="btn active">Итоги</button>
                         <button type="button" onclick="t(1)" class="btn">Бронь</button>
                     </div>
                     <div class="tab-buttons-group">
                         <button type="button" onclick="t(2)" class="btn">Таблицы</button>
-                        <button type="button" onclick="t(3)" class="btn active">Действия</button>
+                        <button type="button" onclick="t(3)" class="btn">Действия</button>
                    </div>
                 </div>
                              
-                <div id="t0" class="tab form-group">
+                <div id="t0" class="tab form-group active">
 
                     <div class="form-field">
                         <p class="info-label">Услуга</p>
@@ -179,25 +179,25 @@
 
                 <div id="t2" class="tab form-group">
 
-                    <label for="service" class="form-label">Работник</label>
-                    <select id="service" required class="form-select">
+                    <label for="worker" class="form-label">Работник</label>
+                    <select id="worker" required class="form-select">
                         <option value="Вика">Вика</option>
                         <option value="Рома">Рома</option>
-                        <option value="Даша">Даша</option>
+                        <option value="Дарья">Даша</option>
                         <option value="Костя">Артём</option>
                     </select>
 
                     <label class="checkbox">
-                        <input type="checkbox" name="agree"/><span></span>
+                        <input type="checkbox" name="pay" id="pay"/><span></span>
                         Бронь оплачена
                     </label>
 
-                    <button id="format_button" type="button" id="update-button" class="btn btn-primary">Отправить в таблицу</button>
+                    <button id="sheets-button" type="button" id="update-button" class="btn btn-primary">Отправить в таблицу</button>
 
 
                 </div>
 
-                <div id="t2" class="tab form-group active">
+                <div id="t2" class="tab form-group">
 
 
 
@@ -211,7 +211,7 @@
                         Записал бронь в DIKIDI
                     </label>
 
-                    <button id="format_button" type="button" id="update-button" class="btn btn-primary">Всё готово</button>
+                    <button id="format_button" type="reset" id="update-button" class="btn btn-primary">Всё готово</button>
 
                 </div>
 
