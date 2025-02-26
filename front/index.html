@@ -118,16 +118,16 @@
                 
                 <div class="tab-buttons">
                     <div class="tab-buttons-group">
-                        <button type="button" onclick="t(0)" class="btn active">Итоги</button>
+                        <button type="button" onclick="t(0)" class="btn">Итоги</button>
                         <button type="button" onclick="t(1)" class="btn">Бронь</button>
                     </div>
                     <div class="tab-buttons-group">
-                        <button type="button" onclick="t(2)" class="btn">Формат</button>
-                        <button type="button" onclick="t(3)" class="btn">Сосал?</button>
+                        <button type="button" onclick="t(2)" class="btn">Таблицы</button>
+                        <button type="button" onclick="t(3)" class="btn active">Действия</button>
                    </div>
                 </div>
                              
-                <div id="t0" class="tab form-group active">
+                <div id="t0" class="tab form-group">
 
                     <div class="form-field">
                         <p class="info-label">Услуга</p>
@@ -176,62 +176,45 @@
                 
                 </div>
 
-                <div id="t2" class="tab form-group inputs-format">
-                    <div class="format-field ">
 
-                        <input id="input-data" class="form-input data-input" placeholder="Введите информацию..."></input>
-                        <button type="button" id="paste_format_start" class="copy_button btn-icon">
-                            <div class="icon-paste"></div>
-                        </button>
+                <div id="t2" class="tab form-group">
+
+                    <label for="service" class="form-label">Работник</label>
+                    <select id="service" required class="form-select">
+                        <option value="Вика">Вика</option>
+                        <option value="Рома">Рома</option>
+                        <option value="Даша">Даша</option>
+                        <option value="Костя">Артём</option>
+                    </select>
+
+                    <label class="checkbox">
+                        <input type="checkbox" name="agree"/><span></span>
+                        Бронь оплачена
+                    </label>
+
+                    <button id="format_button" type="button" id="update-button" class="btn btn-primary">Отправить в таблицу</button>
 
 
-                    </div>  
-                    <div class="format-field ">
-                        <input id="format_service" class="form-input format_input" placeholder="Lite">
-                        <button type="button" id="copy_format_service" class="copy_button btn-icon">
-                            <div class="icon-copy"></div>
-                        </button>
-                        <input id="format_clients" class="form-input format_input" placeholder="2">
-                        <button type="button" id="copy_format_clients" class="copy_button btn-icon">
-                            <div class="icon-copy"></div>
-                        </button>
-                    </div>
-                    <div class="format-field">
-                        <input id="format_start" class="form-input format_input" placeholder="10:00">
-                        <button type="button" id="copy_format_start" class="copy_button btn-icon">
-                            <div class="icon-copy"></div>
-                        </button>
-                        <input id="format_end" class="form-input format_input" placeholder="12:00">
-                        <button type="button" id="copy_format_end" class="copy_button btn-icon">
-                            <div class="icon-copy"></div>
-                        </button>
-                    </div>
-                    <div class="format-field info-data">
-                        <label for="format_postpayment" class="form-label">Постоплата</label>
-                        <div class="format-field">
-                            <input id="format_postpayment" class="form-input format_input" placeholder="270"></input>
-                            <button type="button" id="copy_format_postpayment" class="copy_button btn-icon">
-                                <div class="icon-copy"></div>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="format-field info-data">
-                        <label for="format_discount" class="form-label">Комментарий</label>
-                        <div class="format-field">
-                            <input id="format_discount" class="form-input format_input" placeholder="скидка др"></input>
-                            <button type="button" id="copy_format_discount" class="copy_button btn-icon">
-                                <div class="icon-copy"></div>
-                            </button>
-                        </div>
-                    </div>
-
-                    <button id="format_button" type="button" id="update-button" class="btn btn-primary">Применить</button>
                 </div>
 
-                <div id="t3" class="tab form-group">
-                    <label for="hui" class="form-label">Sosal?</label>
-                    <input id="hui" class="form-input">
+                <div id="t2" class="tab form-group active">
+
+
+
+                    <label class="checkbox"><input type="checkbox" name="agree"/><span></span>
+                        Записал всё в таблицу
+                    </label>
+                    <label class="checkbox"><input type="checkbox" name="agree"/><span></span>
+                        Отправил клиенту все сообщения
+                    </label>
+                    <label class="checkbox"><input type="checkbox" name="agree"/><span></span>
+                        Записал бронь в DIKIDI
+                    </label>
+
+                    <button id="format_button" type="button" id="update-button" class="btn btn-primary">Всё готово</button>
+
                 </div>
+
             </div>
             </fieldset>
 
