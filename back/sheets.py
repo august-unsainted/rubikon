@@ -32,9 +32,8 @@ def update_reservation(values: dict) -> None:
     date = values['not_formatted_date'].split('-')
     time = values['start'] + '-' + values['end']
 
-    data = [f'{date[2]}.{date[1]}.{date[0]}', values['name'], values['phone'], '', service, time,
-            values['clients'], values['prepayment'], values['prepayment'], values['amount'], '', comments[values['discount']]]
+    data = [f'{date[2]}.{date[1]}.{date[0]}', values['name'], values['phone'], '', service, time, values['clients'],
+            values['prepayment'], values['prepayment'], values['amount'], '', comments[values['discount']]]
     wks.update_values('A4:L4', [data])
-
 
 # update_prepayment({'service': 'Киносвидание «Middle»', 'prepayment': 1800, 'date': '2025-02-27', 'start': '17:00'})

@@ -58,7 +58,7 @@ async function update_end(startTime) {
   document.getElementById('end-minute').value = end[1];
 }
 
-document.getElementById('apply-button').onclick = async () => {
+async function get_data() {
   inputs = Array.from(document.getElementsByTagName('input'));
   selects = Array.from(document.getElementsByTagName('select'));
   values = {};
@@ -73,10 +73,6 @@ document.getElementById('apply-button').onclick = async () => {
   document.getElementById('hours').value = values['hours'];
   await update_end(values['start']);
 
-  // for (var field in values) {
-  //   field = document.getElementById
-  // }
-
   if (values['prepayment_info']) {
     document.getElementById('prepayment_info').value =
       values['prepayment_info'];
@@ -89,8 +85,9 @@ document.getElementById('apply-button').onclick = async () => {
 
   results = document.getElementsByClassName('result')
   Array.from(results).forEach((result) => result.textContent = values[result.id])
-
 };
+
+document.getElementById('apply-button').onclick = get_data;
 
 Array.from(document.getElementsByClassName('update_button')).forEach(
   (button) => {
@@ -121,21 +118,14 @@ Array.from(document.getElementsByClassName('copy_button')).forEach((button) => {
     search_id = button.id.replace('copy_', '')
     const field = document.getElementById(search_id);
     navigator.clipboard.writeText(field.value);
-    // navigator.clipboard.writeText(field.value);
-    // console.log(search_id, field.value)
   };
 });
 
 function validateInput(input) {
-  // 1. Оставляем только русские буквы (в нижнем регистре)
   let value = input.value.replace(/[^а-яё]/gi, '');
-
-  // 2. Делаем первую букву заглавной, если строка не пустая
   if (value.length > 0) {
       value = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
   }
-
-  // 3. Обновляем значение поля ввода
   input.value = value;
 }
 
@@ -149,9 +139,6 @@ document.getElementById('format_button').onclick = async () => {
     console.log(inputs[i].value, input_values[i])
    inputs[i].value = input_values[i]
   }
-//  Array.from().forEach((input, i) => {
-//    input.value = input_values[i]
-//  })
 }
 
 document.getElementById('paste_format_start').onclick = async () => {
