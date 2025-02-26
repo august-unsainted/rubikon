@@ -2,6 +2,7 @@ from datetime import datetime
 import copy
 
 from back.data import ButtonsData, TabsData
+from back.sheets import update_prepayment, update_reservation
 
 
 def get_hours(start: str, end: str) -> int:
@@ -69,7 +70,6 @@ def get_results(win: dict) -> dict:
     return win
 
 
-
 def get_main_info(values: dict) -> dict[str: str]:
     win = {}
     for key in ButtonsData.buttons_texts.values():
@@ -103,6 +103,7 @@ def get_main_info(values: dict) -> dict[str: str]:
             win[f'gen_{data}'] = new_data
 
         get_results(win)
+        update_prepayment(win)
 
         flag = True
         for key in ButtonsData.buttons_texts.values():
@@ -125,7 +126,7 @@ def get_main_info(values: dict) -> dict[str: str]:
                        f'Адрес: Хоца Намсараева, 2в\n'
                        f'До встречи! ❤️')
             win['goodbye_info'] = goodbye
-
+            update_reservation(win)
         return win
     return
 
