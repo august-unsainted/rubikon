@@ -40,7 +40,7 @@ function setTime(start, end, replace = true) {
       if (i != 10) {
         i == 24 ? (hour = 0) : (hour = i);
         setOption(hour, hourSelect);
-      }    
+      }
     }
 
     for (let i = 0; i < 60; i += 15) {
@@ -62,7 +62,6 @@ function updateHoursOfWork() {
   } else {
     weekday >= 0 && weekday <= 3 ? setTime(17, 24) : setTime(0, 23);
   }
-
 }
 
 updateFormattedDate(new Date(dateInput.value));
@@ -93,55 +92,54 @@ async function get_main_info() {
 }
 
 async function get_data() {
-  values = await get_main_info()
+  values = await get_main_info();
 
   document.getElementById('hours').value = values['hours'];
   await update_end(values['start']);
 
   if (values['prepayment_info']) {
-    document.getElementById('prepayment_info').value =
+    document.getElementById('summary-prepayment-info').value =
       values['prepayment_info'];
   }
 
   if (values['goodbye_info']) {
-    document.getElementById('goodbye_info').value = values['goodbye_info'];
+    document.getElementById('summary-goodbye-info').value =
+      values['goodbye_info'];
   }
 
-  results = document.getElementsByClassName('result');
+  results = document.getElementsByClassName('form-field__value');
   Array.from(results).forEach(
     (result) => (result.textContent = values[result.id])
   );
 }
 
-document.getElementById('apply-button').onclick = get_data;
+document.getElementById('btn-apply').onclick = get_data;
 
-Array.from(document.getElementsByClassName('update_button')).forEach(
-  (button) => {
-    button.onclick = async () => {
-      function getTime(prefix) {
-        hour = document.getElementById(`${prefix}-hour`).value;
-        minute = document.getElementById(`${prefix}-minute`).value;
-        return `${hour}:${minute}`;
-      }
+Array.from(document.getElementsByClassName('--update')).forEach((button) => {
+  button.onclick = async () => {
+    function getTime(prefix) {
+      hour = document.getElementById(`${prefix}-hour`).value;
+      minute = document.getElementById(`${prefix}-minute`).value;
+      return `${hour}:${minute}`;
+    }
 
-      startTime = getTime('start');
+    startTime = getTime('start');
 
-      if (button.id == 'update_hours') {
-        endTime = getTime('end');
-        document.getElementById('hours').value = await eel.update_hours(
-          startTime,
-          endTime
-        )();
-      } else {
-        await update_end(startTime);
-      }
-    };
-  }
-);
+    if (button.id == 'btn-update-hours') {
+      endTime = getTime('end');
+      document.getElementById('hours').value = await eel.update_hours(
+        startTime,
+        endTime
+      )();
+    } else {
+      await update_end(startTime);
+    }
+  };
+});
 
-Array.from(document.getElementsByClassName('copy_button')).forEach((button) => {
+Array.from(document.getElementsByClassName('btn-copy')).forEach((button) => {
   button.onclick = () => {
-    search_id = button.id.replace('copy_', '');
+    search_id = button.id.replace('btn-copy-', 'summary-');
     const field = document.getElementById(search_id);
     navigator.clipboard.writeText(field.value);
   };
@@ -155,10 +153,30 @@ function validateInput(input) {
   input.value = value;
 }
 
-document.getElementById('sheets-button').onclick = async () => {
-  values = await get_main_info()
-  values['worker'] = document.getElementById('worker').value
-  checkbox = document.getElementById('pay')
-  values['pay'] = checkbox.checked
+document.getElementById('btn-submit-to-google-sheets').onclick = async () => {
+  values = await get_main_info();
+  values['worker'] = document.getElementById('worker').value;
+  checkbox = document.getElementById('checkbox-payment-confirmed');
+  values['checkbox-payment-confirmed'] = checkbox.checked;
   await eel.get_sheets(values);
+};
+
+document.querySelectorAll('.form-field__input').forEach((input) => {
+  input.addEventListener('focus', function () {
+    const parentField = this.closest('.form-field');
+    parentField.classList.add('--focused');
+  });
+
+  input.addEventListener('blur', function () {
+    const parentField = this.closest('.form-field');
+    parentField.classList.remove('--focused');
+  });
+});
+
+function t(i) {
+  const tabs = document.querySelectorAll('.tabs__content-page');
+  const buttons = document.querySelectorAll('.tabs__button');
+
+  tabs.forEach((tab, j) => tab.classList.toggle('--open-tab', j == i));
+  buttons.forEach((btn, j) => btn.classList.toggle('--active', j == i));
 }

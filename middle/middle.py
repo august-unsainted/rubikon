@@ -24,4 +24,4 @@ def update_end(start: str, hours: str) -> str:
 @eel.expose
 def get_sheets(values: dict) -> None:
     update_prepayment(values), update_reservation(values)
-    color_cells(values['pay'])
+    color_cells(values['checkbox-payment-confirmed'])

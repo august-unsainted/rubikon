@@ -54,7 +54,7 @@ def get_results(info: dict) -> dict:
             result = "{:,} рублей".format(int(info[key])).replace(',', ' ')
         else:
             result = info[key]
-        info['result_' + key] = result
+        info['summary-' + key] = result
     return info
 
 

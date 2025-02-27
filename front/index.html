@@ -1,235 +1,212 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Бронирование</title>
-<!--    <link rel="icon" type="image/png" href="icon.png">-->
-    <!-- <link rel="icon" type="image/png" sizes="192x192" href="icon/icon-192x192.png" /> -->
-<!--    <link rel="shortcut icon" href="icon.ico" />-->
-    <!-- <link rel="shortcut icon" href="favicon.png" type="image/x-icon"> -->
-    <link rel="stylesheet" href="styles.css">
+    <title>Рубикон — Бронирование</title>
+    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script type="text/javascript" src="/eel.js"></script>
     <script defer src="script.js"></script>
-    <style>
-        .tab-buttons-group > button {
-            padding: 7px 24px 9px 24px;
-            min-height: 0px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-    </style>
 </head>
 <body>
-    <div class="container">
-        <form id="booking-form" class="form">
-            <fieldset class="form-section">
-                <legend class="form-section__legend">Информация о клиенте и услуге</legend>
-                <div class="form-section__content">
-                    <div class="form-group info-user">
-                        <div class="form-field">
-                            <label for="name" class="form-label">Имя</label>
-                            <input type="text" id="name" placeholder="Иван" class="form-input" oninput="validateInput(this)">
-                        </div>
 
-                        <div class="form-field">
-                            <label for="phone" class="form-label">Номер</label>
-                            <input type="number" id="phone" placeholder="89241921520" class="form-input">
-                        </div>
-
-                        <div class="form-field">
-                            <label for="service" class="form-label">Услуга</label>
-                            <select id="service" required class="form-select">
-                                <option value="Киносвидание «Lite» (зал XS)">«Lite» (XS) — 300р/ч</option>
-                                <option value="Киносвидание «Middle» (зал S)">«Middle» (S) — 600/ч</option>
-                                <option value="Киносвидание «Middle» (зал M)">«Middle» (M) — 600р/ч</option>
-                                <option value="Киносвидание «Max» (зал L)">«Max» (L) — 1 000р/ч</option>
-                                <option value="Аренда зала «XS»">«XS» — 500р/ч</option>
-                                <option value="Аренда зала «S»">«S» — 1 000р/ч</option>
-                                <option value="Аренда зала «M»">«M» — 1 000р/ч</option>
-                                <option value="Аренда зала «L»">«L» — 1 500р/ч</option>
-                            </select>
-                        </div>
-
-                        <div class="form-field">
-                            <label for="clients" class="form-label">Гостей</label>
-                            <input type="number" id="clients" min="1" placeholder="7" class="form-input">
-                        </div>
-
-                        <div class="form-field">
-                            <label for="discount" class="form-label" data-required="false">Скидка</label>
-                            <select id="discount" class="form-select">
-                                <option value="">Без скидки</option>
-                                <option value="День рождения (10%)">День рождения (10%)</option>
-                                <option value="Администратор (10%)">Администратор (10%)</option>
-                                <option value="Отметка (5%)">Отметка (5%)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group info-data">
-                        <div class="form-field">
-                            <label for="date" class="form-label">Дата</label>
-                            <div class="date-field">
-                                <input type="date" id="date" required class="form-input input-data">
-                                <span id="formattedDate" class="form-date"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-field">
-                            <label for="start-hour" class="form-label">Начало</label>
-                            <div class="time-field">
-                                <select id="start-hour" required class="form-select time-select"></select> :
-                                <select id="start-minute" required class="form-select time-select"></select>
-                            </div>
-                        </div>
-
-                        <div class="form-field">
-                            <label for="end-hour" class="form-label">Конец</label>
-                            <div class="time-field">
-                                <select id="end-hour" class="form-select time-select"></select> :
-                                <select id="end-minute" class="form-select time-select"></select>
-                                <button type="button" id="update_hours" class="update_button btn-icon">
-                                    <div class="icon-svg"></div>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="form-field">
-                            <label for="hours" class="form-label">Часов</label>
-                            <div class="time-field">
-                                <input type="number" id="hours" min="1" placeholder="3" class="form-input">
-                                <button type="button" id="update_end" class="update_button btn-icon">
-                                    <div class="icon-svg"></div>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+<form class="container">
+    <fieldset class="form-section service">
+        <legend class="form-section__legend">Информация о клиенте и услуге</legend>
+        <div class="form-section__content">
+            <div class="form-section__fields">
+                <div class="form-field">
+                    <label class="form-field__label">Имя</label>
+                    <input type="text" id="name" class="form-field__input" placeholder="Кирилл">
                 </div>
-                <div class="form-buttons">
-                    <button type="reset" class="btn btn-cancel">Сбросить</button>
-                    <button type="button" id="apply-button" class="btn btn-primary">Применить</button>
+                <div class="form-field">
+                    <label class="form-field__label">Номер</label>
+                    <input type="text" id="phone" class="form-field__input" placeholder="89021521412">
                 </div>
-            </fieldset>
-
-            <fieldset class="form-section add">
-                <legend class="form-section__legend">Информация</legend>
-                
-                <div class="tab-buttons">
-                    <div class="tab-buttons-group">
-                        <button type="button" onclick="t(0)" class="btn active">Итоги</button>
-                        <button type="button" onclick="t(1)" class="btn">Бронь</button>
-                    </div>
-                    <div class="tab-buttons-group">
-                        <button type="button" onclick="t(2)" class="btn">Таблицы</button>
-                        <button type="button" onclick="t(3)" class="btn">Действия</button>
-                   </div>
-                </div>
-                             
-                <div id="t0" class="tab form-group active">
-
-                    <div class="form-field">
-                        <p class="info-label">Услуга</p>
-                        <h3 class="result" id="result_service">Аренда зала «M»</h3>
-                    </div>
-                    <div class="form-field">
-                        <p class="info-label">Дата</p>
-                        <h3 class="result" id="result_date">28 февраля (чт)</h3>
-                    </div>
-                    <div class="form-field">
-                        <p class="info-label">Время</p>
-                        <h3 class="result" id="result_time">с 15:00 до 16:00 (1ч)</h3>
-                    </div>
-                    <div class="form-field">
-                        <p class="info-label">Скидка</p>
-                        <h3 class="result" id="result_discount">День рождения (10%)</h3>
-                    </div>
-                    <div class="form-field">
-                        <p class="info-label">Сумма</p>
-                        <h3 class="result"  id="result_amount">1 659 рублей</h3>
-                    </div>
-                    <div class="form-field">
-                        <p class="info-label">Предоплата</p>
-                        <h3 class="result" id="result_prepayment">200 рублей</h3>
-                    </div>
-
-                </div>
-
-                <div id="t1" class="tab form-group">
-                    <div class="form-field">
-                        <label for="prepayment_info" class="form-label">Предоплата (#1)</label>
-                        <textarea id="prepayment_info" placeholder="Нажмите на кнопку..." class="form-textarea" rows="4"></textarea>
-                    </div>
-                    <div class="form-field">
-                        <label for="prepayment_info" class="form-label">Прощание (#2)</label>
-                        <textarea id="goodbye_info" placeholder="Нажмите на кнопку..." class="form-textarea" rows="4"></textarea>
-                    </div>
-                   <div class="form-buttons-info">
-                        <button type="button" id="copy_prepayment_info" class="copy_button-reservation btn-icon copy_button">
-                            <div class="icon-copy"></div> #1
-                        </button>
-                        <button type="button" id="copy_goodbye_info" class="copy_button-reservation btn-icon copy_button">
-                            <div class="icon-copy"></div> #2    
-                        </button>
-                    </div>
-                
-                </div>
-
-
-                <div id="t2" class="tab form-group">
-
-                    <label for="worker" class="form-label">Работник</label>
-                    <select id="worker" required class="form-select">
-                        <option value="Вика">Вика</option>
-                        <option value="Рома">Рома</option>
-                        <option value="Дарья">Даша</option>
-                        <option value="Костя">Артём</option>
+                <div class="form-field">
+                    <label class="form-field__label">Услуга</label>
+                    <select class="form-field__input" id="service">
+                        <option value="Киносвидание «Lite» (зал XS)" >«Lite» (XS) — 300р/ч</option>
+                        <option value="Киносвидание «Middle» (зал S)">«Middle» (S) — 600/ч</option>
+                        <option value="Киносвидание «Middle» (зал M)">«Middle» (M) — 600р/ч</option>
+                        <option value="Киносвидание «Max» (зал L)">«Max» (L) — 1 000р/ч</option>
+                        <option value="Аренда зала «XS»">«XS» — 500р/ч</option>
+                        <option value="Аренда зала «S»">«S» — 1 000р/ч</option>
+                        <option value="Аренда зала «M»">«M» — 1 000р/ч</option>
+                        <option value="Аренда зала «L»">«L» — 1 500р/ч</option>
                     </select>
+                </div>
+                <div class="form-field">
+                    <label class="form-field__label">Гостей</label>
+                    <input type="number" id="clients" class="form-field__input" placeholder="6">
+                </div>
+                <div class="form-field">
+                    <label class="form-field__label">Скидка</label>
+                    <select class="form-field__input" id="discount">
+                        <option value="">Без скидки</option>
+                        <option value="День рождения (10%)">День рождения (10%)</option>
+                        <option value="Администратор (10%)">Администратор (10%)</option>
+                        <option value="Отметка (5%)">Отметка (5%)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-section__fields">
+                <div class="form-field">
+                    <label class="form-field__label">Дата</label>
+                    <div class="date-field">
+                        <input type="date" id="date" class="form-field__input --data">
+                        <span id="formattedDate" class="form-date">26 февраля (среда)</span>
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label for="start-hour" class="form-field__label">Начало</label>
+                    <div class="form-field__time-container">
+                        <select id="start-hour" class="form-field__input time-select"></select>
+                        <span class="time-separator">:</span>
+                        <select id="start-minute" class="form-field__input time-select"></select>
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label for="end-hour" class="form-field__label">Конец</label>
+                    <div class="form-field__time-container">
+                      <select id="end-hour" class="form-field__input time-select"></select>
+                      <span class="time-separator">:</span>
+                      <select id="end-minute" class="form-field__input time-select"></select>
+                      <button type="button" id="btn-update-hours" class="buttons__icon --primary --update">
+                        <div class="icon --swap"></div>
+                    </button>
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label class="form-field__label">Часов</label>
+                    <div class="form-field__time-container">
+                        <input type="number" id="hours" class="form-field__input" placeholder="4">
+                        <button type="button" id="btn-update-end-hour" class="buttons__icon --primary --update">
+                            <div class="icon --swap"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-section__button-group">
+            <button type="reset" class="form-section__button --cancel">Сбросить</button>
+            <button type="button" id="btn-apply" class="form-section__button --primary">Применить</button>
+        </div>
+    </fieldset>
+    
+    <fieldset class="form-section information">
+        <legend class="form-section__legend">Информация</legend>
+        <div class="tabs">
+            <div class="tabs__buttons">
+                <div class="tabs__group">
+                    <button type="button" onclick="t(0)" class="tabs__button --active">Итоги</button>
+                    <button type="button" onclick="t(1)" class="tabs__button">Таблицы</button>
 
-                    <label class="checkbox">
-                        <input type="checkbox" name="pay" id="pay"/><span></span>
+                </div>
+                <div class="tabs__group">
+                    <button type="button" onclick="t(2)" class="tabs__button">Бронь</button>
+                    <button type="button" onclick="t(3)" class="tabs__button">Действия</button>
+                </div>
+            </div>
+            <div id="t0" class="tabs__content-page --open-tab">
+                <div class="tabs__pane">
+                    <div class="form-field">
+                        <p>Услуга</p>
+                        <h3 class="form-field__value" id="summary-service">Аренда зала «M»</h3>
+                    </div>
+                    <div class="form-field">
+                        <p>Дата</p>
+                        <h3 class="form-field__value" id="summary-date">28 февраля (чт)</h3>
+                    </div>
+                    <div class="form-field">
+                        <p>Время</p>
+                        <h3 class="form-field__value" id="summary-time">с 15:00 до 16:00 (1ч)</h3>
+                    </div>
+                    <div class="form-field">
+                        <p>Скидка</p>
+                        <h3 class="form-field__value" id="summary-discount">День рождения (10%)</h3>
+                    </div>
+                    <div class="form-field">
+                        <p>Сумма</p>
+                        <h3 class="form-field__value" id="summary-amount">1 659 рублей</h3>
+                    </div>
+                    <div class="form-field">
+                        <p>Предоплата</p>
+                        <h3 class="form-field__value" id="summary-prepayment">200 рублей</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div id="t1" class="tabs__content-page">
+                <div class="tabs__pane">
+                    <div class="form-field">
+                        <label class="form-field__label">Работник</label>
+                        <select class="form-field__input" id="worker">
+                            <option value="Рома">Роман</option>
+                            <option value="Вика">Вика</option>
+                            <option value="Дарья">Даша</option>
+                            <option value="Артём">Артём</option>
+                        </select>
+                    </div>
+                    <label class="tabs__checkbox">
+                        <input type="checkbox" id="checkbox-payment-confirmed" name="agree"/><span></span>
                         Бронь оплачена
                     </label>
-
-                    <button id="sheets-button" type="button" id="update-button" class="btn btn-primary">Отправить в таблицу</button>
-
-
                 </div>
-
-                <div id="t2" class="tab form-group">
-
-
-
-                    <label class="checkbox"><input type="checkbox" name="agree"/><span></span>
-                        Записал всё в таблицу
-                    </label>
-                    <label class="checkbox"><input type="checkbox" name="agree"/><span></span>
-                        Отправил клиенту все сообщения
-                    </label>
-                    <label class="checkbox"><input type="checkbox" name="agree"/><span></span>
-                        Записал бронь в DIKIDI
-                    </label>
-
-                    <button id="format_button" type="reset" id="update-button" class="btn btn-primary">Всё готово</button>
-
-                </div>
+                <button type="button" id="btn-submit-to-google-sheets" class="form-section__button --primary">Отправить в таблицы</button>
 
             </div>
-            </fieldset>
 
-        </form>
-    </div>
+            <div id="t2" class="tabs__content-page">
+    
+                <div class="tabs__pane">
+                    <div class="form-field">
+                        <label class="form-field__label">Предоплата</label>
+                        <textarea class="form-field__textarea" id="summary-prepayment-info" placeholder="Нажмите «Применить»" rows="5"></textarea>
+                    </div>
+                    <div class="form-field">
+                        <label class="form-field__label">Прощание</label>
+                        <textarea class="form-field__textarea" id="summary-goodbye-info" placeholder="Сначала заполните все поля" rows="5"></textarea>
+                    </div>
+
+                </div>
+        
+                <div class="buttons">
+                    <button type="button" id="btn-copy-prepayment-info" class="buttons__icon --primary btn-copy">
+                        <div class="icon --copy"></div> Пред.
+                    </button>
+                    
+                    <button type="button" id="btn-copy-goodbye-info" class="buttons__icon --primary btn-copy">
+                        <div class="icon --copy"></div> Прощ.   
+                    </button> 
+                </div>
+            </div>
+
+
+            <div id="t3" class="tabs__content-page">
+                <div class="tabs__pane">
+                    <label class="tabs__checkbox">
+                        <input type="checkbox" name="agree"/><span></span>
+                        Записал всё в таблицу
+                    </label>
+                    <label class="tabs__checkbox">
+                        <input type="checkbox" name="agree"/><span></span>
+                        Отправил клиенту все сообщения
+                    </label>
+                    <label class="tabs__checkbox">
+                        <input type="checkbox" name="agree"/><span></span>
+                        Записал бронь в DIKIDI
+                    </label>
+                </div>
+                <button type="reset" class="form-section__button --primary">Всё готово!</button>
+
+            </div>
+
+
+        </div>
+    </fieldset>
+</form>
+
 </body>
-
-<script>
-    function t(i) {
-      const tabs = document.querySelectorAll('.tab');
-      const buttons = document.querySelectorAll('.tab-buttons button');
-      
-      tabs.forEach((tab, j) => tab.classList.toggle('active', j == i));
-      buttons.forEach((btn, j) => btn.classList.toggle('active', j == i));
-    }
-</script>
-
 </html>
