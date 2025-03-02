@@ -1,10 +1,12 @@
 import pygsheets
 from datetime import datetime
 import pytz
+import os
 
+service_account = os.path.abspath("../back/service_account.json")
 tz = pytz.timezone('Asia/Irkutsk')
 
-client = pygsheets.authorize(service_account_file='D:/Trash/rubikon/service_account.json')
+client = pygsheets.authorize(service_account_file=service_account)
 
 table = client.open('Новая таблица')
 wks = table.worksheet_by_title('Основное')
