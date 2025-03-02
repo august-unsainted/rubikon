@@ -13,7 +13,8 @@ price = {
     'Аренда зала «XS»': 500, 'Аренда зала «S»': 1000, 'Аренда зала «M»': 1000, 'Аренда зала «L»': 1500
 }
 
-fields = ['name', 'date', 'phone', 'start', 'service', 'end', 'clients', 'hours', 'discount', 'not_formatted_date']
+fields = ['name', 'date', 'phone', 'start', 'service', 'end', 'clients', 'hours', 'discount', 'not_formatted_date',
+          'today', 'tomorrow']
 
 prepayment_template = (
     "Бронируем мы по 50% предоплате ☺️\n\n"

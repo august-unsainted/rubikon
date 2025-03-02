@@ -6,12 +6,13 @@
     <title>Рубикон — Бронирование</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="icon.ico" type="image/x-icon">
     <script type="text/javascript" src="/eel.js"></script>
     <script defer src="script.js"></script>
 </head>
 <body>
 
-<form class="container">
+<form class="container" id="form">
     <fieldset class="form-section service">
         <legend class="form-section__legend">Информация о клиенте и услуге</legend>
         <div class="form-section__content">
@@ -73,7 +74,7 @@
                       <select id="end-hour" class="form-field__input time-select"></select>
                       <span class="time-separator">:</span>
                       <select id="end-minute" class="form-field__input time-select"></select>
-                      <button type="button" id="btn-update-hours" class="buttons__icon --primary --update">
+                      <button type="button" id="btn-update-end-hour" class="buttons__icon --primary --update">
                         <div class="icon --swap"></div>
                     </button>
                     </div>
@@ -82,7 +83,7 @@
                     <label class="form-field__label">Часов</label>
                     <div class="form-field__time-container">
                         <input type="number" id="hours" class="form-field__input" placeholder="4">
-                        <button type="button" id="btn-update-end-hour" class="buttons__icon --primary --update">
+                        <button type="button" id="btn-update-hours" class="buttons__icon --primary --update">
                             <div class="icon --swap"></div>
                         </button>
                     </div>

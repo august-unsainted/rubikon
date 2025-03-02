@@ -1,5 +1,4 @@
 import copy
-from datetime import datetime
 
 from back.data import *
 
@@ -32,12 +31,22 @@ def get_amounts(service: str, hours: str, discount: str) -> (str, str):
     return str(amount), str(amount / 2)[:-2]
 
 
+def get_date(info: dict) -> str:
+    date = info['date']
+    if date == info['today']:
+        date = 'сегодня'
+    elif date == info['tomorrow']:
+        date = date[:date.index(' (')]
+        date = f'завтра ({date})'
+    return date
+
+
 def get_prepayment_info(info: dict[str, str]) -> (str, str):
     info = copy.deepcopy(info)
     info['service'] = (info['service'].replace('Аренда', 'аренды').replace('ие', 'ия'))
     amount, prepayment = ["{:,}".format(int(info[key])).replace(',', ' ')
                           for key in ['amount', 'prepayment']]
-    date = f'на {info['date']} ' if info['date'] else ''
+    date = f'на {get_date(info)} '
     discount = 'с учётом скидки ' if info['discount'] else ''
     prepayment_text = prepayment_template.format(info['service'], date, info['start'], info['end'], discount, amount,
                                                  prepayment)
@@ -88,7 +97,7 @@ def get_main_info(values: dict) -> dict[str: str]:
             reminder = ('Пожалуйста, не забудьте взять с собой оригинал свидетельства о рождении или '
                         'паспорта для подтверждения скидки)\n\n')
 
-            goodbye = goodbye_template.format(info['date'], info['start'],
+            goodbye = goodbye_template.format(get_date(info), info['start'],
                                               reminder if info['discount'] == 'День рождения (10%)' else '')
             info['goodbye_info'] = goodbye
         return info
