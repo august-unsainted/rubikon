@@ -272,17 +272,30 @@ body {
     color: white;
 }
 
-.--update {
+.--icon {
     width: min-content;
     padding: 0px 10px;
 }
 
 .--swap {
-    background-image: url('/svg/swap.svg'); /* Путь к SVG файлу */
+    background-image: url('svg/swap.svg'); /* Путь к SVG файлу */
 }
 
 .--copy {
-    background-image: url('/svg/copy.svg'); /* Путь к SVG файлу */
+    background-image: url('svg/copy.svg'); /* Путь к SVG файлу */
+}
+
+.--paste {
+    background-image: url('svg/paste.svg'); /* Путь к SVG файлу */
+}
+
+.--create {
+    background-image: url('svg/create.svg'); /* Путь к SVG файлу */
+}
+
+
+.--data {
+    font-size: 14px;
 }
 
 .--cancel:active {
@@ -316,16 +329,6 @@ body {
 }
 
 
-::placeholder {
-    color: var(--text-color);
-    opacity: 0.2;
-}
-
-.--data {
-    font-size: 14px;
-}
-
-
 .date-field {
     display: flex;
     gap: 4px;
@@ -346,4 +349,8 @@ body {
     color: var(--text-color);
     border-radius: 8px;
     border: 2px solid var(--border-color);
+}
+
+.login {
+    flex-direction: column;
 }
