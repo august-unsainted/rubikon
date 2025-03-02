@@ -4,7 +4,7 @@ import pytz
 
 tz = pytz.timezone('Asia/Irkutsk')
 
-client = pygsheets.authorize(service_file='service_account.json')
+client = pygsheets.authorize(service_account_file='D:/Trash/rubikon/service_account.json')
 
 table = client.open('Новая таблица')
 wks = table.worksheet_by_title('Основное')
@@ -15,8 +15,6 @@ comments = {
     'Администратор (10%)': 'скидка админ',
     'Отметка (5%)': 'скидка отметка'
 }
-# wks.update_values('A1:K1', [["01.01.2025"], ['L'], [2], [False], ["17:00"], ["18:00"], ['900'], [], [], [], ['скидка др'
-# ]], majordim='COLUMNS')
 
 
 def correct_service(service):
