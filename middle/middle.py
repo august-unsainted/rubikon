@@ -1,5 +1,3 @@
-from typing import Tuple
-
 import eel
 
 from back.get_info import get_main_info, get_hours, get_end

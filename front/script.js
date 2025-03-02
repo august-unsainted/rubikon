@@ -1,22 +1,19 @@
+const dateInput = document.getElementById('date');
 const today = new Date();
 const year = today.getFullYear();
 const month = String(today.getMonth() + 1).padStart(2, '0');
 const day = String(today.getDate()).padStart(2, '0');
 const minDate = `${year}-${month}-${day}`;
-
-const dateInput = document.getElementById('date');
-dateInput.setAttribute('min', minDate);
-dateInput.value = minDate;
-
 const formattedDateElement = document.getElementById('formattedDate');
 
-function updateFormattedDate(date) {
+function getFormattedDate(date) {
   const optionsDayMonth = { day: 'numeric', month: 'long' };
   const optionsWeekday = { weekday: 'long' };
   const dayMonth = date.toLocaleDateString('ru-RU', optionsDayMonth);
   const weekday = date.toLocaleDateString('ru-RU', optionsWeekday);
   const formattedDate = `${dayMonth} (${weekday})`;
-  formattedDateElement.textContent = formattedDate;
+  return formattedDate;
+//  formattedDateElement.textContent = formattedDate;
 }
 
 function setOption(i, select) {
@@ -53,21 +50,32 @@ function setTime(start, end, replace = true) {
 
 function updateHoursOfWork() {
   const selectedDate = new Date(dateInput.value);
-  updateFormattedDate(selectedDate);
+  formattedDateElement.textContent = getFormattedDate(selectedDate);
   weekday = selectedDate.getDay();
 
   if (weekday > 3 && weekday <= 5) {
     setTime(0, 9);
     setTime(17, 23, false);
   } else {
-    weekday >= 0 && weekday <= 3 ? setTime(17, 24) : setTime(0, 23);
+    weekday > 0 && weekday <= 3 ? setTime(17, 24) : setTime(0, 23);
   }
-}
+};
 
-updateFormattedDate(new Date(dateInput.value));
-updateHoursOfWork();
+function updateDate() {
+    dateInput.setAttribute('min', minDate);
+    dateInput.value = minDate;
+    formattedDateElement.textContent = getFormattedDate(new Date(dateInput.value));
+    updateHoursOfWork();
+};
+
+updateDate();
 
 dateInput.addEventListener('change', updateHoursOfWork);
+
+const form = document.getElementById('form');
+form.addEventListener('reset', () => {
+    updateDate();
+});
 
 async function update_end(startTime) {
   hours = document.getElementById('hours').value;
@@ -87,6 +95,10 @@ async function get_main_info() {
 
   values['date'] = document.getElementById('formattedDate').textContent;
   values['not_formatted_date'] = document.getElementById('date').value;
+  const minDateObj = new Date(minDate);
+  values['today'] = getFormattedDate(minDateObj);
+  minDateObj.setDate(minDateObj.getDate() + 1)
+  values['tomorrow'] = getFormattedDate(minDateObj);
   values = await eel.get_info(values)();
   return values;
 }
