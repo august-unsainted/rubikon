@@ -2,6 +2,7 @@ import eel
 
 from back.get_info import get_main_info, get_hours, get_end
 from back.sheets import *
+from back.generate_password import generate_daily_password
 
 
 @eel.expose
@@ -22,4 +23,9 @@ def update_end(start: str, hours: str) -> str:
 @eel.expose
 def get_sheets(values: dict) -> None:
     update_prepayment(values), update_reservation(values)
-    color_cells(values['checkbox-payment-confirmed'])
+    # color_cells(values['checkbox-payment-confirmed'])
+
+
+@eel.expose
+def generate_password() -> str:
+    return generate_daily_password()

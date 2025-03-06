@@ -48,7 +48,7 @@ body {
 
 .service {
     width: 570px;
-} 
+}
 
 .information {
     height: 485px;
@@ -206,12 +206,12 @@ body {
 
 .icon {
     width: 24px;
-    height: 24px; 
-    background-size: contain; 
-    background-repeat: no-repeat; 
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
-    border: none; 
-    cursor: pointer; 
+    border: none;
+    cursor: pointer;
 }
 
 
@@ -309,6 +309,9 @@ body {
     display: none;
 }
 
+::placeholder {
+    opacity: 25%;
+}
 
 .tabs__checkbox input:checked ~ span::before {
     content: '✓';

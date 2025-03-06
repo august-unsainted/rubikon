@@ -168,8 +168,9 @@ function validateInput(input) {
 document.getElementById('btn-submit-to-google-sheets').onclick = async () => {
   values = await get_main_info();
   values['worker'] = document.getElementById('worker').value;
-  checkbox = document.getElementById('checkbox-payment-confirmed');
-  values['checkbox-payment-confirmed'] = checkbox.checked;
+  values['source'] = document.getElementById('source').value;
+//  checkbox = document.getElementById('checkbox-payment-confirmed');
+//  values['checkbox-payment-confirmed'] = checkbox.checked;
   await eel.get_sheets(values);
 };
 

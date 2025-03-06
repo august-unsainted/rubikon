@@ -46,7 +46,7 @@ def get_prepayment_info(info: dict[str, str]) -> (str, str):
     info['service'] = (info['service'].replace('Аренда', 'аренды').replace('ие', 'ия'))
     amount, prepayment = ["{:,}".format(int(info[key])).replace(',', ' ')
                           for key in ['amount', 'prepayment']]
-    date = f'на {get_date(info)} '
+    date = f'на {get_date(info)}'
     discount = 'с учётом скидки ' if info['discount'] else ''
     prepayment_text = prepayment_template.format(info['service'], date, info['start'], info['end'], discount, amount,
                                                  prepayment)
@@ -102,11 +102,3 @@ def get_main_info(values: dict) -> dict[str: str]:
             info['goodbye_info'] = goodbye
         return info
     return
-
-
-# def set_hours_of_work(date: str) -> list:
-#     weekday = datetime.strptime(date, '%Y.%d.%m').weekday()
-#     if 0 <= weekday <= 2:
-#         return [17, 0]
-#     else:
-#
