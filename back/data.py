@@ -9,8 +9,8 @@ result_fields = ['service', 'amount', 'prepayment', 'date', 'time', 'discount']
 
 price = {
     'Киносвидание «Lite» (зал XS)': 300, 'Киносвидание «Middle» (зал S)': 600, 'Киносвидание «Middle» (зал M)': 600,
-    'Киносвидание «Max» (зал L)': 1000,
-    'Аренда зала «XS»': 500, 'Аренда зала «S»': 1000, 'Аренда зала «M»': 1000, 'Аренда зала «L»': 1500
+    'Киносвидание «Max» (зал L)': 900,
+    'Аренда зала «XS»': 500, 'Аренда зала «S»': 1000, 'Аренда зала «M»': 1000, 'Аренда зала «L»': 1250, 'Аренда зала «XL»': 1500
 }
 
 fields = ['name', 'date', 'phone', 'start', 'service', 'end', 'clients', 'hours', 'discount', 'not_formatted_date',

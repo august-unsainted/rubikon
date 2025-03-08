@@ -1,17 +1,23 @@
 import eel
 
-from back.get_info import get_main_info, get_hours, get_end
+from back.get_info import get_main_info, get_hours, get_end, get_addictional_info
 from back.sheets import *
 from back.generate_password import generate_daily_password
 
 
 @eel.expose
 def get_info(values: dict[str]) -> dict[str]:
+    values = get_main_info(values)
+    return get_addictional_info(values)
+
+
+@eel.expose
+def get_primary_info(values: dict[str]) -> dict[str]:
     return get_main_info(values)
 
 
 @eel.expose
-def update_hours(start: str, end: str) -> int:
+def update_hours(start: str, end: str) -> float:
     return get_hours(start, end)
 
 

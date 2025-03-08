@@ -13,7 +13,7 @@ function getFormattedDate(date) {
   const weekday = date.toLocaleDateString('ru-RU', optionsWeekday);
   const formattedDate = `${dayMonth} (${weekday})`;
   return formattedDate;
-//  formattedDateElement.textContent = formattedDate;
+  //  formattedDateElement.textContent = formattedDate;
 }
 
 function setOption(i, select) {
@@ -62,10 +62,10 @@ function updateHoursOfWork() {
 };
 
 function updateDate() {
-    dateInput.setAttribute('min', minDate);
-    dateInput.value = minDate;
-    formattedDateElement.textContent = getFormattedDate(new Date(dateInput.value));
-    updateHoursOfWork();
+  dateInput.setAttribute('min', minDate);
+  dateInput.value = minDate;
+  formattedDateElement.textContent = getFormattedDate(new Date(dateInput.value));
+  updateHoursOfWork();
 };
 
 updateDate();
@@ -74,7 +74,7 @@ dateInput.addEventListener('change', updateHoursOfWork);
 
 const form = document.getElementById('form');
 form.addEventListener('reset', () => {
-    updateDate();
+  updateDate();
 });
 
 async function update_end(startTime) {
@@ -85,7 +85,7 @@ async function update_end(startTime) {
   document.getElementById('end-minute').value = end[1];
 }
 
-async function get_main_info() {
+async function get_main_info(type = '') {
   inputs = Array.from(document.getElementsByTagName('input'));
   selects = Array.from(document.getElementsByTagName('select'));
   values = {};
@@ -99,17 +99,22 @@ async function get_main_info() {
   values['today'] = getFormattedDate(minDateObj);
   minDateObj.setDate(minDateObj.getDate() + 1)
   values['tomorrow'] = getFormattedDate(minDateObj);
-  values = await eel.get_info(values)();
+  if (type) {
+    values = await eel.get_primary_info(values)();
+  } else {
+    values = await eel.get_info(values)();
+  }
+  console.log(values)
+
   return values;
 }
 
-async function get_data() {
-  values = await get_main_info();
+async function get_data(type = '') {
+   values = await get_main_info(type)
+   console.log(values)
 
-  document.getElementById('hours').value = values['hours'];
-  await update_end(values['start']);
-
-  if (values['prepayment_info']) {
+   if (!type) {
+    if (values['prepayment_info']) {
     document.getElementById('summary-prepayment-info').value =
       values['prepayment_info'];
   }
@@ -117,6 +122,7 @@ async function get_data() {
   if (values['goodbye_info']) {
     document.getElementById('summary-goodbye-info').value =
       values['goodbye_info'];
+  }
   }
 
   results = document.getElementsByClassName('form-field__value');
@@ -127,35 +133,44 @@ async function get_data() {
 
 document.getElementById('btn-apply').onclick = get_data;
 
-Array.from(document.getElementsByClassName('--update')).forEach((button) => {
-  button.onclick = async () => {
-    function getTime(prefix) {
-      hour = document.getElementById(`${prefix}-hour`).value;
-      minute = document.getElementById(`${prefix}-minute`).value;
-      return `${hour}:${minute}`;
-    }
+async function updateTime(type) {
+  function getTime(prefix) {
+    hour = document.getElementById(`${prefix}-hour`).value;
+    minute = document.getElementById(`${prefix}-minute`).value;
+    return `${hour}:${minute}`;
+  }
 
-    startTime = getTime('start');
+  startTime = getTime('start');
 
-    if (button.id == 'btn-update-hours') {
-      endTime = getTime('end');
-      document.getElementById('hours').value = await eel.update_hours(
-        startTime,
-        endTime
-      )();
-    } else {
-      await update_end(startTime);
-    }
-  };
+  if (type == 'hours') {
+    endTime = getTime('end');
+    document.getElementById('hours').value = await eel.update_hours(
+      startTime,
+      endTime
+    )();
+  } else {
+    await update_end(startTime);
+  }
+};
+
+timeSelects = document.getElementsByClassName('time-select')
+
+for (let i = 0; i < timeSelects.length; i++) {
+  timeSelects[i].addEventListener('change', async () => {
+    await updateTime('hours');
+    get_data('primary');
+  })
+}
+
+document.getElementById('hours').addEventListener('change', async () => {
+  await updateTime();
+  get_data('primary');
+})
+
+Array.from(document.getElementsByClassName('primary-field')).forEach((field) => {
+  field.addEventListener('change', () => get_data('primary'))
 });
 
-Array.from(document.getElementsByClassName('btn-copy')).forEach((button) => {
-  button.onclick = () => {
-    search_id = button.id.replace('btn-copy-', 'summary-');
-    const field = document.getElementById(search_id);
-    navigator.clipboard.writeText(field.value);
-  };
-});
 
 function validateInput(input) {
   let value = input.value.replace(/[^а-яё]/gi, '');
@@ -169,8 +184,8 @@ document.getElementById('btn-submit-to-google-sheets').onclick = async () => {
   values = await get_main_info();
   values['worker'] = document.getElementById('worker').value;
   values['source'] = document.getElementById('source').value;
-//  checkbox = document.getElementById('checkbox-payment-confirmed');
-//  values['checkbox-payment-confirmed'] = checkbox.checked;
+  //  checkbox = document.getElementById('checkbox-payment-confirmed');
+  //  values['checkbox-payment-confirmed'] = checkbox.checked;
   await eel.get_sheets(values);
 };
 

@@ -27,15 +27,16 @@
                 </div>
                 <div class="form-field">
                     <label class="form-field__label">Услуга</label>
-                    <select class="form-field__input" id="service">
+                    <select class="form-field__input primary-field" id="service">
                         <option value="Киносвидание «Lite» (зал XS)" >«Lite» (XS) — 300р/ч</option>
                         <option value="Киносвидание «Middle» (зал S)">«Middle» (S) — 600/ч</option>
                         <option value="Киносвидание «Middle» (зал M)">«Middle» (M) — 600р/ч</option>
-                        <option value="Киносвидание «Max» (зал L)">«Max» (L) — 1 000р/ч</option>
+                        <option value="Киносвидание «Max» (зал L)">«Max» (L) — 900р/ч</option>
                         <option value="Аренда зала «XS»">«XS» — 500р/ч</option>
                         <option value="Аренда зала «S»">«S» — 1 000р/ч</option>
                         <option value="Аренда зала «M»">«M» — 1 000р/ч</option>
-                        <option value="Аренда зала «L»">«L» — 1 500р/ч</option>
+                        <option value="Аренда зала «L»">«L» — 1 250р/ч</option>
+                        <option value="Аренда зала «XL»">«XL» — 1 500р/ч</option>
                     </select>
                 </div>
                 <div class="form-field">
@@ -44,7 +45,7 @@
                 </div>
                 <div class="form-field">
                     <label class="form-field__label">Скидка</label>
-                    <select class="form-field__input" id="discount">
+                    <select class="form-field__input primary-field" id="discount">
                         <option value="">Без скидки</option>
                         <option value="День рождения (10%)">День рождения (10%)</option>
                         <option value="Администратор (10%)">Администратор (10%)</option>
@@ -56,7 +57,7 @@
                 <div class="form-field">
                     <label class="form-field__label">Дата</label>
                     <div class="date-field">
-                        <input type="date" id="date" class="form-field__input --data">
+                        <input type="date" id="date" class="form-field__input --data primary-field">
                         <span id="formattedDate" class="form-date">26 февраля (среда)</span>
                     </div>
                 </div>
@@ -74,19 +75,11 @@
                       <select id="end-hour" class="form-field__input time-select"></select>
                       <span class="time-separator">:</span>
                       <select id="end-minute" class="form-field__input time-select"></select>
-                      <button type="button" id="btn-update-end-hour" class="buttons__icon --primary --icon --update">
-                        <div class="icon --swap"></div>
-                    </button>
                     </div>
                 </div>
                 <div class="form-field">
                     <label class="form-field__label">Часов</label>
-                    <div class="form-field__time-container">
-                        <input type="number" id="hours" class="form-field__input">
-                        <button type="button" id="btn-update-hours" class="buttons__icon --primary --icon --update">
-                            <div class="icon --swap"></div>
-                        </button>
-                    </div>
+                    <input type="number" id="hours" class="form-field__input">
                 </div>
             </div>
         </div>
