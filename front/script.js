@@ -85,7 +85,7 @@ async function update_end(startTime) {
   document.getElementById('end-minute').value = end[1];
 }
 
-async function get_main_info(type = '') {
+async function get_main_info(type = null) {
   inputs = Array.from(document.getElementsByTagName('input'));
   selects = Array.from(document.getElementsByTagName('select'));
   values = {};
@@ -104,14 +104,12 @@ async function get_main_info(type = '') {
   } else {
     values = await eel.get_info(values)();
   }
-  console.log(values)
 
   return values;
 }
 
-async function get_data(type = '') {
+async function get_data(type = null) {
    values = await get_main_info(type)
-   console.log(values)
 
    if (!type) {
     if (values['prepayment_info']) {
@@ -131,7 +129,7 @@ async function get_data(type = '') {
   );
 }
 
-document.getElementById('btn-apply').onclick = get_data;
+document.getElementById('btn-apply').onclick = () => get_data();
 
 async function updateTime(type) {
   function getTime(prefix) {
