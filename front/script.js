@@ -187,6 +187,14 @@ document.getElementById('btn-submit-to-google-sheets').onclick = async () => {
   await eel.get_sheets(values);
 };
 
+Array.from(document.getElementsByClassName('btn-copy')).forEach((button) => {
+   button.onclick = () => {
+     search_id = button.id.replace('btn-copy-', 'summary-');
+     const field = document.getElementById(search_id);
+     navigator.clipboard.writeText(field.value);
+   };
+  })
+
 document.querySelectorAll('.form-field__input').forEach((input) => {
   input.addEventListener('focus', function () {
     const parentField = this.closest('.form-field');
