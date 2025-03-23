@@ -56,7 +56,7 @@ def update_prepayment(values: dict) -> None:
     date = values['not_formatted_date'].split('-')
     today = datetime.now(tz=tz).strftime('%d.%m.%Y')
     data = [today, 'Предоплата', '', '', f'{date[2]}.{date[1]} {service} {values["start"]}', '',
-            values['prepayment'], values['worker']]
+            values['prepayment'].replace('.', ','), values['worker']]
     wks.update_values('A2:H2', [data])
 
 

@@ -57,7 +57,10 @@ def get_prepayment_info(info: dict[str, str]) -> (str, str):
                           for key in ['amount', 'prepayment']]
     date = f'на {get_date(info)}'
     discount = 'с учётом скидки ' if info['discount'] else ''
-    prepayment_text = prepayment_template.format(info['service'], date, info['start'], info['end'], discount, amount,
+    template = prepayment_template
+    if not info['already_was']:
+        template += prepayment_addictional
+    prepayment_text = template.format(info['service'], date, info['start'], info['end'], discount, amount,
                                                  prepayment)
     return prepayment_text
 
@@ -79,7 +82,7 @@ def get_results(info: dict) -> dict:
     return info
 
 
-def get_main_info(values: dict) -> dict[str]:
+def get_main_info(values: dict) -> dict:
     info = {}
     for key in fields:
         if key in ['start', 'end']:
@@ -100,7 +103,7 @@ def get_main_info(values: dict) -> dict[str]:
     return
 
 
-def get_addictional_info(info: dict) -> dict[str]:
+def get_addictional_info(info: dict) -> dict:
     start, end, hours = info['start'], info['end'], info['hours']
 
     if (start and end) or (start and hours):
@@ -111,8 +114,9 @@ def get_addictional_info(info: dict) -> dict[str]:
         if flag:
             reminder = ('Пожалуйста, не забудьте взять с собой оригинал свидетельства о рождении или '
                         'паспорта для подтверждения скидки)\n\n')
+            template = goodbye_short_template if info['already_was'] else goodbye_template
 
-            goodbye = goodbye_template.format(get_date(info), info['start'],
+            goodbye = template.format(get_date(info), info['start'],
                                               reminder if info['discount'] == 'День рождения (10%)' else '')
             info['goodbye_info'] = goodbye
     return info
