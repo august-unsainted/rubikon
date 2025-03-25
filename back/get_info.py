@@ -61,7 +61,7 @@ def get_prepayment_info(info: dict[str, str]) -> (str, str):
     if not info['already_was']:
         template += prepayment_addictional
     prepayment_text = template.format(info['service'], date, info['start'], info['end'], discount, amount,
-                                                 prepayment)
+                                      prepayment)
     return prepayment_text
 
 
@@ -76,6 +76,8 @@ def get_results(info: dict) -> dict:
             result = info['discount'] if info['discount'] else 'Без скидки'
         elif key in ['amount', 'prepayment']:
             result = "{:,} рублей".format(float(info[key])).replace(',', ' ').replace('.0', '')
+        elif key == 'service':
+            result = info['service'].replace('Киносвидание', 'КС').replace('(зал ', '(')
         else:
             result = info[key]
         info['summary-' + key] = result
@@ -109,14 +111,18 @@ def get_addictional_info(info: dict) -> dict:
     if (start and end) or (start and hours):
         info['prepayment_info'] = get_prepayment_info(info)
 
-        flag = not [key for key in fields if not info[key] and key != 'discount']
+        flag = not [key for key in fields if not info[key] and key != 'discount' and key != 'already_was']
 
         if flag:
             reminder = ('Пожалуйста, не забудьте взять с собой оригинал свидетельства о рождении или '
                         'паспорта для подтверждения скидки)\n\n')
-            template = goodbye_short_template if info['already_was'] else goodbye_template
+            goodbye_addictional = ('С собой можете взять сменную обувь, но у нас есть тапочки, если что ☺️\n\n'
+                                   'Адрес: Хоца Намсараева, 2в\n')
 
-            goodbye = template.format(get_date(info), info['start'],
-                                              reminder if info['discount'] == 'День рождения (10%)' else '')
+            goodbye = goodbye_template.format(get_date(info), info['start'],
+                                              reminder if info['discount'] == 'День рождения (10%)' else '',
+                                              goodbye_addictional if not info['already_was'] else ''
+                                              )
+
             info['goodbye_info'] = goodbye
     return info
